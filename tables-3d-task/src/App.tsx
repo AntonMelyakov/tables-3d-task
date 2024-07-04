@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import { tab } from '@testing-library/user-event/dist/tab';
-import $ from 'jquery';
 import Table from './components/Table';
 import TableForm from './components/TableForm';
 import ReportForm from './components/ReportForm';
@@ -23,6 +20,7 @@ export interface ReportInput {
 }
 
 function App() {
+  //dummy data
   let rowsDummy: Row[] = [
     {nameId: "sales", name: "Sales", verticalLevel:1, date:0, color:"white", extend: true, childs: [
       { nameId: "costs", name: "Costs", verticalLevel:0, date:0, color:"red", extend: true, childs: [
@@ -34,6 +32,7 @@ function App() {
     ]},
     { nameId: "netIncome", name: "Net Income", verticalLevel:0, date:0, color:"green", extend: true, childs: [] }
   ]
+  //dummy data
   let reportsDummy = [
     { id:0, sales:3, costs:-1, netIncome:2},
     { id:1, sales:5, costs:-1, netIncome:45},
@@ -42,20 +41,14 @@ function App() {
   ]
 
 const[rows, setRows] = useState<Row[]>(rowsDummy)
-const[reports, setReports] = useState<any[]>(reportsDummy)
+const[reports, setReports] = useState<any[]>(reportsDummy) //set reports as "any"
 const[tableRows, setTableRows] = useState<JSX.Element[]>([])
 
 //reports form
+//NB:reportsInputs are used for the Row form as well
 const[reportsInputs, setReportsInputs] = useState<ReportInput[]>([])
-//const[reportsFormValues, setReportsFormValues] = useState({})
 const[selectedReportId, setSelectedReportId] = useState<number | null>(null)
-//const[selectedReport, setSelectedReport] = useState<object | null>(null)
 
-
-
-
-
-//start of report form
 function addReportsInputs(rows: Row[], arrayToPush:ReportInput[] = []) {   
   rows.map((row) => {  
     arrayToPush.push({name:row.name, nameId:row.nameId})
@@ -66,53 +59,9 @@ function addReportsInputs(rows: Row[], arrayToPush:ReportInput[] = []) {
   return arrayToPush
 }
 
-// function getnewReportId() {
-//   if(reports.length == 0){
-//     return 0
-//   }
-
-//   const max = reports.reduce(function(prev, current) {
-//     return (prev && prev.id > current.id) ? prev : current
-//   }) //returns object
-
-//   return max.id+1
-// }
-
-
-// function addNewReport(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
-//   e.preventDefault()
-//   if(selectedReportId === null) { //new report
-//     let newReport = {...reportsFormValues, id: getnewReportId()}
-//     setReports([...reports, newReport])
-//   }else{
-//    let newReports= reports.map(report => {
-//       if(report.id == selectedReportId) {
-//         return {...reportsFormValues, id: selectedReportId}
-//       }else{
-//         return report
-//       }
-//     })
-
-//     setReports(newReports)
-//   }
-  
-//   setSelectedReportId(null)
-// }
-
 function handleEditReport(id: number){
   setSelectedReportId(id);
-  // let selectedReport = reports.filter((report) => report.id == id)
-  // // setSelectedReport(selectedReport[0])
-  // setReportsFormValues({...selectedReport[0]})
 }
-
- 
-// function handleFormChange( name:any, value: string) {
-//   setReportsFormValues({...reportsFormValues, [name]: value})
-//   console.log(reportsFormValues)
-// }
-
-//end of report form
 
 //extend and collapse rows
 function extendTable(event: React.MouseEvent<HTMLButtonElement, MouseEvent>, parent: string) {
@@ -170,7 +119,7 @@ function orderRows(rows: Row[]){
     date: number; verticalLevel: number; 
 }, b: {
   date: number; verticalLevel: number; 
-}) => a.verticalLevel - b.verticalLevel || b.date - a.date ); //if two rows have the same vertical level, the newest should be firs
+}) => a.verticalLevel - b.verticalLevel || b.date - a.date ); //if two rows have the same vertical level, the newest should be first
 
   newRows = newRows.map((row) => {
     if(row.childs){
@@ -190,7 +139,6 @@ function fixVertical(rows: Row[]) {
     fixVertical(row.childs)
   }
   return row
-
  })
 
  return fixedRows
@@ -231,15 +179,12 @@ useEffect(() => {
   if(!compareRows(orderedRows)) {
     setRows(orderedRows)
   }
-  //make the table as ana array of JSX elements
+  //make the table as an array of JSX elements
   makeTableArray()
-  //make Report Inputs, alos used for select options in 
+  //make Report Inputs, also used for select options in 
   //create  new row form
   setReportsInputs(addReportsInputs(rows))
 },[rows, reports])
-
-
-
 
   return (
     <div className="App">
@@ -248,8 +193,7 @@ useEffect(() => {
         <ReportForm reportsInputs={reportsInputs} setReports={setReports} reports={reports} 
           selectedReportId={selectedReportId} setSelectedReportId={setSelectedReportId} />
         <TableForm rows={rows} setRows={setRows} reportsInputs={reportsInputs} />
-      </div>
-      
+      </div>     
     </div>
   );
 }

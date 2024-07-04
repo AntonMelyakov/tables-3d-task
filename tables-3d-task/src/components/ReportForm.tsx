@@ -11,21 +11,7 @@ interface ReportFormProps {
 
 
 export default function ReportForm({reportsInputs, reports, setReports, selectedReportId, setSelectedReportId }: ReportFormProps) {
-    //reports form
-    //const[reportsInputs, setReportsInputs] = useState<any[]>([])
     const[reportsFormValues, setReportsFormValues] = useState({})
-    //const[selectedReportId, setSelectedReportId] = useState<number | null>(null)
-    //const[selectedReport, setSelectedReport] = useState<object | null>(null)
-
-    // function addReportsInputs(rows: any, arrayToPush:object[] = []) {   
-    //     rows.map((row: any) => {  
-    //       arrayToPush.push({name:row.name, nameId:row.nameId})
-    //       if(row.childs){
-    //          addReportsInputs(row.childs, arrayToPush)
-    //       }
-    //     })
-    //     return arrayToPush
-    //   }
       
       function getnewReportId() {
         if(reports.length == 0){
@@ -49,7 +35,6 @@ export default function ReportForm({reportsInputs, reports, setReports, selected
       
       function addValuesToEditReport(id: number){
         let selectedReport = reports.filter((report: { id: number; }) => report.id == id)
-        // setSelectedReport(selectedReport[0])
         setReportsFormValues({...selectedReport[0]})
       }
 
@@ -75,13 +60,6 @@ export default function ReportForm({reportsInputs, reports, setReports, selected
         setSelectedReportId(null)
         setReportsFormValues({})
       }
-      
-    //   function handleEditReport(id: any){
-    //     setSelectedReportId(id);
-    //     let selectedReport = reports.filter((report: { id: any; }) => report.id == id)
-    //     setSelectedReport(selectedReport[0])
-    //     setReportsFormValues({...selectedReport[0]})
-    //   }
       
        
       function handleFormChange( name:string, value: string) {

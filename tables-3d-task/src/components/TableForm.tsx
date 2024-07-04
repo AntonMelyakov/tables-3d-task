@@ -1,4 +1,3 @@
-import { timeStamp } from "console";
 import React, { Dispatch, SetStateAction, useState } from "react";
 import { Row, ReportInput } from "../App";
 
@@ -18,8 +17,8 @@ export default function TableForm({rows, setRows, reportsInputs} : TableFormProp
     const[parentInput, setParentInput] = useState<string>('')
     const[errors, setErrors] = useState<any>({})
 
-    function checkNameIdUniqueness(rows: any, nameId: string, result:{unique: boolean} = {unique: true}) {
-        rows.map((row:any) => {
+    function checkNameIdUniqueness(rows: Row[], nameId: string, result:{unique: boolean} = {unique: true}) {
+        rows.map((row) => {
           if(row.nameId == nameId){
             result.unique = false
           }
@@ -80,8 +79,8 @@ export default function TableForm({rows, setRows, reportsInputs} : TableFormProp
         setVerticalLevelInput(0)
       }
       
-      function addToParent(rows: any, parent: any, newRow: any) {
-        let newRows = rows.map((row:any) => {
+      function addToParent(rows: Row[], parent: any, newRow: any) {
+        let newRows = rows.map((row) => {
           if(row.nameId == parent){
             row.childs.push(newRow)
           }

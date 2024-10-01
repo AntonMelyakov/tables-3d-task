@@ -4,7 +4,7 @@ import Table from './components/Table';
 import TableForm from './components/TableForm';
 import ReportForm from './components/ReportForm';
 
-export interface Row {
+export type Row = {
   nameId: string, 
   name: string,
   verticalLevel: number,
@@ -14,12 +14,11 @@ export interface Row {
   childs: Row[]
 }
 
-export interface ReportInput {
+export type ReportInput = {
   name: string,
   nameId: string
 }
 
-function App() {
   //dummy data
   let rowsDummy: Row[] = [
     {nameId: "sales", name: "Sales", verticalLevel:1, date:0, color:"white", extend: true, childs: [
@@ -39,6 +38,9 @@ function App() {
     { id:2, costs:-1, netIncome:4, costs3:8},
     { id:3, costs:-1, netIncome:4, costs3:8}
   ]
+
+function App() {
+
 
 const[rows, setRows] = useState<Row[]>(rowsDummy)
 const[reports, setReports] = useState<any[]>(reportsDummy) //set reports as "any"

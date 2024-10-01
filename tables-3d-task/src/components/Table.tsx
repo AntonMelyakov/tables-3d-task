@@ -12,7 +12,7 @@ export default function Table({tableRows}: TableProps) {
               <div className='d-flex justify-content-center m-3'>
                 <table className='table table-bordered table-hover w-50'>
                 <tbody>
-                    {tableRows.length > 0 && tableRows.map((row) => row )}
+                    {tableRows}
                 </tbody>
                 </table>
             </div>
